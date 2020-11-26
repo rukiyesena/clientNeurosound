@@ -1,5 +1,5 @@
 ;
-(function($) {
+(function ($) {
     $.fn.datepicker.language['tr'] = {
         days: ["Pazar", "Pazartesi", "Salı", "Çarşamba", "Perşembe", "Cuma", "Cumartesi", "Pazar"],
         daysShort: ["Pz", "Pzt", "Sal", "Çrş", "Prş", "Cu", "Cts", "Pz"],
@@ -8,8 +8,8 @@
         monthsShort: ["Oca", "Şub", "Mar", "Nis", "May", "Haz", "Tem", "Ağu", "Eyl", "Eki", "Kas", "Ara"],
         today: "Bugün",
         clear: 'Temizle',
-        dateFormat: 'dd/mm/yyyy',
-        timeFormat: 'hh:ii aa',
+        dateFormat: 'yyyy-mm-dd',
+        timepicker: 'hh:mm:ss.sss',
         firstDay: 1
     };
 })(jQuery);

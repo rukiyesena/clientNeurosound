@@ -64,7 +64,7 @@
             // timepicker
             timepicker: false,
             onlyTimepicker: false,
-            dateTimeSeparator: ' ',
+            dateTimeSeparator: 'T',
             timeFormat: '',
             minHours: 0,
             maxHours: 24,

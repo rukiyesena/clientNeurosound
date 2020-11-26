@@ -1,12 +1,13 @@
-document.getElementById("adminname").value = sessionStorage.getItem("adminname");
 $(document).ready(function () {
     var deger, teststd;
     var items = [];
-    var teststudent = []
     var test_visible = document.getElementById('testName');
     var test_visibility = document.getElementById('divVisible');
     test_visibility.style.visibility = 'hidden';
     var urlStudentId = getUrlParameter("id");
+    var stdref;
+
+    var ctx = document.getElementById('chart-area').getContext('2d');
     $.ajax({
         url: path.server + "/student/list",
         type: "GET",
@@ -25,9 +26,15 @@ $(document).ready(function () {
             useNextLoad();
         })
     function useNextLoad() {
+        var titleArr = [];
+        var startArr = [];
+        var endArr = [];
+        var teststudentCalendar = [];
         if (urlStudentId != null) {
             for (var i = 0; i < deger.length; i++) {
                 if (urlStudentId == deger[i].ref) {
+                    stdref = deger[i].ref;
+
                     document.getElementById("studentAd").value = deger[i].std_name;
                     document.getElementById("studentBirth").value = deger[i].birthday;
                     document.getElementById("studentProgram").value = deger[i].program;
@@ -37,9 +44,163 @@ $(document).ready(function () {
                     document.getElementById("stdPhone").value = deger[i].phone1;
                     document.getElementById("stdMail").value = deger[i].mail;
                     document.getElementById("testCount").value = deger[i].testStudents.length;
+
+                    var sumResult = 0;
+                    var avgResult = 0;
+                    var arrTest = [];
+                    var teststdRefArr = [];
+                    var teststdDateArr = [];
+                    var teststdResultArr = [];
+                    var stdtest = [];
+
+                    for (var j = 0; j < deger[i].testStudents.length; j++) {
+                        if (deger[i].testStudents[j].result != "") {
+                            console.log(deger[i].testStudents[j].result)
+                            teststdRefArr.push(deger[i]['testStudents'][j].tests_ref);
+                            teststdDateArr.push(new Date(deger[i]['testStudents'][j].start));
+                            teststdResultArr.push(parseFloat(deger[i]['testStudents'][j].result));
+                        }
+                    }
+
+                    for (var i = 0; i < teststdRefArr.length; i++) {
+                        stdtest[i] = {
+                            test_ref: teststdRefArr[i],
+                            date: teststdDateArr[i],
+                            result: teststdResultArr[i]
+                        }
+                    }
+                    //test id ye göre sonuçları grupla
+                    var groups = {};
+                    var dateGroups = {};
+                    for (var i = 0; i < stdtest.length; i++) {
+                        var groupName = stdtest[i].test_ref;
+                        if (!groups[groupName] && !dateGroups[groupName]) {
+                            groups[groupName] = [];
+                            dateGroups[groupName] = [];
+                        }
+                        groups[groupName].push(stdtest[i].result);
+                        dateGroups[groupName].push(stdtest[i].date);
+                    }
+                    stdtest = [];
+                    for (var groupName in groups, dateGroups) {
+                        stdtest.push({ test_ref: groupName, result: groups[groupName], date: dateGroups[groupName] });
+                    }
+                    var stdLenght = stdtest.length;
+                    for (var i = 0; i < stdtest.length; i++) {
+                        sumResult += performanceEvaluation(stdtest[i]);
+                    }
+                    avgResult = sumResult / stdtest.length;
+                    avgResult = avgResult.toFixed(2);
+                    avgResult = Number(avgResult);
+                    document.getElementById("testPerformance").value = avgResult;
+
+
+                    /*  for (var j = 0; j < deger[i].testStudents.length; j++) {
+                          titleArr.push(deger[i].testStudents[j].title);
+                          startArr.push(deger[i].testStudents[j].start);
+                          endArr.push(deger[i].testStudents[j].end_date);
+  
+                      }*/
                 }
             }
+            /*  for (var i = 0; i < titleArr.length; i++) {
+                  teststudentCalendar[i] = {
+                      title: titleArr[i],
+                      start: startArr[i],
+                      end: endArr[i],
+                  };
+  
+              }*/
+            teststudentCalendar = [
+                {
+                    title: titleArr,
+                    start: startArr,
+                    end: endArr,
+                },
+
+            ]
+            console.log(teststudentCalendar)
+            var initialLocaleCode = 'tr';
+            var calendarEl = document.getElementById('calendar');
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+                headerToolbar: {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
+                },
+                initialDate: '2020-09-12',
+                locale: initialLocaleCode,
+                editable: true,
+                navLinks: true, // can click day/week names to navigate views
+                dayMaxEvents: true, // allow "more" link when too many events
+                buttonIcons: false, // show the prev/next text
+                weekNumbers: true,
+                events: [ // put the array in the `events` property
+                    {
+                        title: 'event1',
+                        start: '2020-01-01'
+                    },
+                    {
+                        title: 'event2',
+                        start: '2020-01-05',
+                        end: '2020-01-07'
+                    },
+                    {
+                        title: 'event3',
+                        start: '2020-01-09T12:30:00',
+                    }
+                ],
+
+            });
+
+            calendar.render();
+
         }
+
+    }
+    function performanceEvaluation(arrTest) {
+        var stdTestDate = [];
+        var stdTestResult = [];
+        var testvalue = [];
+        var stdTestArray = [];
+        for (var i = 0; i < arrTest.date.length; i++) {
+            stdTestArray[i] = {
+                test_ref: arrTest.test_ref[i],
+                date: arrTest.date[i],
+                result: arrTest.result[i],
+            }
+        }
+        //sort date
+        stdTestArray.sort(function (a, b) {
+            return a.date - b.date;
+        });
+
+        for (var k = 0; k < stdTestArray.length; k++) {
+            stdTestDate.push(convertDate(stdTestArray[k].date));
+            stdTestResult.push(stdTestArray[k].result)
+        }
+        //format date
+        function convertDate(inputFormat) {
+            function pad(s) { return (s < 10) ? '0' + s : s; }
+            var d = new Date(inputFormat)
+            return [pad(d.getDate()), pad(d.getMonth() + 1), d.getFullYear()].join('/')
+        }
+        var sum = 0;
+        for (var i = 0; i < stdTestResult.length - 1; i++) {
+            sum = stdTestResult[i + 1] - stdTestResult[i];
+            sum = sum.toFixed(3);
+            sum = Number(sum);
+            testvalue.push(sum);
+        }
+        //general performance 
+        var testsum = 0;
+        for (var i = 0; i < testvalue.length; i++) {
+            testsum += testvalue[i];
+        }
+        testsum = testsum.toFixed(3);
+        testsum = Number(testsum);
+        //    console.log("testsum" + testsum)
+        return testsum;
     }
     $.ajax({
         url: "http://localhost:8080/tests/list",
@@ -52,6 +213,8 @@ $(document).ready(function () {
             alert("Error");
         })
         .then(function () {
+            console.log("stdref" + stdref)
+            //select option a test verilerini set et
             for (var i = 0; i < test.length; i++) {
                 items[i] = {
                     "key": test[i].ref,
@@ -65,6 +228,9 @@ $(document).ready(function () {
                 el.value = opt;
                 test_visible.appendChild(el);
             }
+            urlRef = getUrlParameter("id")
+
+
             $('#testShow').click(function () {
                 test_visibility.style.visibility = 'visible';
                 urlRef = getUrlParameter("id")
@@ -92,10 +258,17 @@ $(document).ready(function () {
                             "language": {
                                 "url": "http://cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Turkish.json"
                             },
-                            
+
                             columns: [
                                 { "data": null },
-                                { "data": "test_date" },
+                                {
+                                    "data": "start",
+                                    type: 'date',
+                                    render: function (data, type, row) {
+                                        return data ? moment(data).format('DD/MM/YYYY') : '';
+
+                                    },
+                                },
                                 { "data": "result" },
                                 {
                                     sortable: false,
@@ -145,17 +318,20 @@ $(document).ready(function () {
                                 }
 
                             ],
-                            
-                            "pageLength": 5,
+
+                            // "pageLength": 5,
                             "bLengthChange": false,
-                            
+                            paging: false,
+                            searching: false,
+                            destroy: true,
+
                         });
                         //Index column
-                        test_table.on( 'order.dt search.dt', function () {
-                            test_table.column(0, {search:'applied', order:'applied'}).nodes().each( function (cell, i) {
-                                cell.innerHTML = i+1;
-                            } );
-                        } ).draw();
+                        test_table.on('order.dt search.dt', function () {
+                            test_table.column(0, { search: 'applied', order: 'applied' }).nodes().each(function (cell, i) {
+                                cell.innerHTML = i + 1;
+                            });
+                        }).draw();
 
                         oTable = $('#teststd_datatable').dataTable();
                         oTable.on('click', '#deleteBtn', function () {
@@ -180,69 +356,68 @@ $(document).ready(function () {
                                     location.reload();
                                 })
                         });
-                        if (teststd.result != "") {
-                            console.log("in")
-                        }
                         var sum = 0;
+                        var stdtestdate = [];
+                        var stdtestvalue = [];
+                        var stdtestresult = [];
+                        var stdtest = [];
                         var testvalue = [];
                         var testdate = [];
                         var testresult = [];
                         for (var i = 0; i < teststd.length; i++) {
                             if (teststd[i].result != "") {
-                                teststudent[i] = {
-                                    test_ref: teststd[i].ref,
-                                    date: convertDate(teststd[i].test_date),
-                                    result: parseFloat(teststd[i].result),
-                                };
+                                stdtestvalue.push(teststd[i].ref)
+                                stdtestdate.push(teststd[i].start);
+                                stdtestresult.push(parseFloat(teststd[i].result));
+                            }
+                        }
+                        for (var i = 0; i < teststd.length; i++) {
+                            stdtest[i] = {
+                                test_ref: stdtestvalue[i],
+                                date: stdtestdate[i],
+                                result: stdtestresult[i]
                             }
                         }
                         //sort date
-                        teststudent.sort(function compare(a, b) {
-                            var dateA = new Date(a.date);
-                            var dateB = new Date(b.date);
-                            return dateA - dateB;
+                        stdtest.sort(function (a, b) {
+                            return new Date(a.date) - new Date(b.date);
                         });
-                        for (var i = 0; i < teststudent.length; i++) {
-                            testdate.push(teststudent[i].date);
-                            testresult.push(teststudent[i].result)
+                        for (var i = 0; i < teststd.length; i++) {
+                            testdate.push(convertDate(stdtest[i].date));
+                            testresult.push(stdtest[i].result)
                         }
                         //format date
                         function convertDate(inputFormat) {
                             function pad(s) { return (s < 10) ? '0' + s : s; }
                             var d = new Date(inputFormat)
-                            return [pad(d.getMonth() + 1), pad(d.getDate()), d.getFullYear()].join('/')
+                            return [pad(d.getDate()), pad(d.getMonth() + 1), d.getFullYear()].join('/')
                         }
                         //ay bazında performans
-                        for (var i = 0; i < teststudent.length - 1; i++) {
-                            sum = teststudent[i + 1].result - teststudent[i].result;
+                        for (var i = 0; i < testresult.length - 1; i++) {
+                            sum = testresult[i + 1] - testresult[i];
                             sum = sum.toFixed(3);
                             sum = Number(sum);
                             testvalue.push(sum);
                         }
-                        console.log(testvalue)
                         //general performance 
                         var testsum = 0;
-                        var testsum_rest;
-                        var general_data = [];
                         for (var i = 0; i < testvalue.length; i++) {
                             testsum += testvalue[i];
                         }
-                        general_data.push(testsum * 100)
-                        console.log(testsum)
-
+                        testsum = testsum.toFixed(3);
+                        testsum = Number(testsum);
                         //random color
                         var color = [];
                         var performance = [];
                         function randomColorFactor() {
-                            var o = Math.round, r = Math.random, s = 255;
-                            return 'rgba(' + o(r() * s) + ',' + o(r() * s) + ',' + o(r() * s) + ',' + r().toFixed(1) + ')';
+                            var r = function () { return Math.floor(Math.random() * 256) };
+                            return "rgb(" + r() + "," + r() + "," + r() + ")";
                         }
-                        for (var i = 0; i < teststudent.length - 1; i++) {
+                        for (var i = 0; i < stdtest.length - 1; i++) {
                             color.push(randomColorFactor());
-                            performance.push(teststudent[i].date + "-" + teststudent[i + 1].date)
+                            performance.push(testdate[i] + "-" + testdate[i + 1])
                         }
                         //pie chart
-                        var ctx = document.getElementById('chart-area').getContext('2d');
                         var config = new Chart(ctx, {
                             type: 'polarArea',
                             data: {
@@ -260,7 +435,7 @@ $(document).ready(function () {
                                 },
                                 title: {
                                     display: true,
-                                    text: 'Chart.js Polar Area Chart'
+
                                 },
                                 scale: {
                                     ticks: {
@@ -274,7 +449,7 @@ $(document).ready(function () {
                                 }
                             }
                         });
-                        console.log(testdate)
+
                         //genel performans chart
                         var element = document.getElementById("general_value_chart");
                         var height = parseInt(KTUtil.css(element, 'height'));
@@ -381,6 +556,5 @@ $(document).ready(function () {
 
 
         })
-
 
 });

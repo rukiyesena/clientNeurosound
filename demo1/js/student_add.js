@@ -1,4 +1,3 @@
-document.getElementById("adminname").value = sessionStorage.getItem("adminname");
 $(document).ready(function () {
     var deger;
     var setregister, setname, setsurname, setbirthday, setbirthplace, setadress1, setsaint, setphone1, setphone2, setmail, setschool, setgrade, setstatus, setnote, setprogram, setprofileType;

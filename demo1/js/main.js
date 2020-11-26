@@ -24,6 +24,13 @@ $(document).ready(function () {
                         sessionStorage.setItem("ref", deger[i].ref);
                         sessionStorage.setItem("adminname", deger[i].name);
                         document.getElementById("adminname").value = sessionStorage.getItem("adminname");
+                        let field = document.getElementById("adminname");
+                        if (sessionStorage.getItem("autosave")) {
+                            field.value = sessionStorage.getItem("autosave");
+                        }
+                        field.addEventListener("change", function () {
+                            sessionStorage.setItem("autosave", field.value);
+                        });
                     } else {
                         alert("hata")
                         //  document.getElementById("result").innerHTML = "Sorry, your browser does not support Web Storage...";
@@ -33,5 +40,5 @@ $(document).ready(function () {
             }
         }
     }
-    
+
 });

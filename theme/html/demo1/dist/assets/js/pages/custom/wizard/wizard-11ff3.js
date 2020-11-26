@@ -50,7 +50,14 @@ var KTWizard1 = function () {
 								message: 'Ülke gerekli'
 							}
 						}
-					}
+					},
+					testdate: {
+						validators: {
+							notEmpty: {
+								message: 'Test zamanı gerekli'
+							}
+						}
+					},
 				},
 				plugins: {
 					trigger: new FormValidation.plugins.Trigger(),

@@ -1,4 +1,11 @@
-document.getElementById("adminname").value = sessionStorage.getItem("adminname");
+/*document.getElementById("adminname").value = sessionStorage.getItem("adminname");
+let field = document.getElementById("adminname");
+if (sessionStorage.getItem("autosave")) {
+    field.value = sessionStorage.getItem("autosave");
+}
+field.addEventListener("change", function () {
+    sessionStorage.setItem("autosave", field.value);
+});*/
 $(document).ready(function () {
     var deger;
     var variable;
@@ -22,8 +29,8 @@ $(document).ready(function () {
                 },
                 columns: [
                     { "data": null },
-                    {"data": "std_name"}, 
-                    {"data": "std_surname"}, 
+                    { "data": "std_name" },
+                    { "data": "std_surname" },
                     { "data": "saint" },
                     { "data": "phone1" },
                     { "data": "status" },
@@ -123,11 +130,11 @@ $(document).ready(function () {
                 "scrollX": true,
                 "autoWidth": true,
             });
-            table.on( 'order.dt search.dt', function () {
-                table.column(0, {search:'applied', order:'applied'}).nodes().each( function (cell, i) {
-                    cell.innerHTML = i+1;
-                } );
-            } ).draw();
+            table.on('order.dt search.dt', function () {
+                table.column(0, { search: 'applied', order: 'applied' }).nodes().each(function (cell, i) {
+                    cell.innerHTML = i + 1;
+                });
+            }).draw();
             oTable = $('#kt_datatable').dataTable();
             oTable.on('click', '#deleteBtn', function () {
                 variable = table.row($(this).parents('tr')).data();

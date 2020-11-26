@@ -1,6 +1,7 @@
-document.getElementById("adminname").value = sessionStorage.getItem("adminname");
 
 $(document).ready(function () {
+
+    var studentname;
     var items = [];
     var variable, itemkey, deger, test;
     var urlRef, urlStd, urlTest;
@@ -67,11 +68,13 @@ $(document).ready(function () {
             $('#selectBtn').click(function () {
                 for (var i = 0; i < table.rows('.selected').data().length; i++) {
                     variable = table.rows('.selected').data()[i].ref;
-                    window.location.href = "test_profile.html?id=" + variable;
+                    location.href = "test_profile.html?id=" + variable;
                 }
             });
             setStudent();
         });
+
+
     $.ajax({
         url: "http://localhost:8080/tests/list",
         method: "GET",
@@ -83,6 +86,8 @@ $(document).ready(function () {
             alert("Error");
         })
         .then(function () {
+            urlTest = getUrlParameter("ref")
+            var testNameValue;
             for (var i = 0; i < test.length; i++) {
                 items[i] = {
                     "key": test[i].ref,
@@ -96,6 +101,15 @@ $(document).ready(function () {
                 el.value = opt;
                 test_visible.appendChild(el);
             }
+            for (var i = 0; i < items.length; i++) {
+                if (urlTest == items[i].key) {
+                    testNameValue = items[i].value
+                    document.getElementById("testName").value = testNameValue;
+                }
+            }
+            
+            console.log("testNameValue" + testNameValue)
+            console.log("studentname" + studentname)
             $('#testBtn').click(function () {
                 urlRef = getUrlParameter("id")
                 var program = document.getElementById("testName").value;
@@ -103,20 +117,26 @@ $(document).ready(function () {
                     if (items[i].value == program) {
                         itemkey = items[i].key;
                     }
-                } 
+                }
                 //alert(itemkey)
                 window.location.href = "test_profile.html?id=" + urlRef + "&ref=" + itemkey;
+
             })
+
             $("#testAddBtn").click(function () {
                 urlStd = getUrlParameter("id")
                 urlTest = getUrlParameter("ref")
-                var testdate = document.getElementById("testDate").value;
+                var testdate = document.getElementById("kt_datepicker").value;
+
                 var testresult = document.getElementById("testResult").value;
+                console.log(testresult)
                 var obj = {
                     test_date: testdate,
                     result: testresult,
                     test_id: urlTest,
                     student_id: urlStd,
+                    end_date: testdate,
+                    title: studentname + "-" + testNameValue,
                 };
 
                 $.ajax({
@@ -129,7 +149,9 @@ $(document).ready(function () {
                 })
                     .done(function (data, textStatus, jqXHR) {
 
-                        window.location.href = "student_profile.html?id=" + urlStd;
+                        window.location.href = "test_profile.html" ;
+
+                        alert("testresult" + testresult)
                     })
                     .fail(function (jqXHR, textStatus, errorThrown) {
                         alert(obj + "Error" + errorThrown, jqXHR, textStatus);
@@ -144,7 +166,7 @@ $(document).ready(function () {
             for (var i = 0; i < deger.length; i++) {
                 if (getUrlParameter("id") == deger[i].ref) {
 
-                    var studentname = deger[i].std_name;
+                    studentname = deger[i].std_name;
                     var studentbirth = deger[i].birthday;
                     var studentprogram = deger[i].program;
                     var studentprototip = deger[i].profileType;
