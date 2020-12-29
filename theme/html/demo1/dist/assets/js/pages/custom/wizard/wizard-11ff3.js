@@ -58,6 +58,13 @@ var KTWizard1 = function () {
 							}
 						}
 					},
+					birthday: {
+						validators: {
+							notEmpty: {
+								message: 'Yaş gerekli'
+							}
+						}
+					},
 				},
 				plugins: {
 					trigger: new FormValidation.plugins.Trigger(),

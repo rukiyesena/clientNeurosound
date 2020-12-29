@@ -25,7 +25,7 @@ $(document).ready(function () {
                     var surveyKey;
                     if (code == deger[i].code && name == deger[i].name && password == deger[i].password) {
                         surveyKey = deger[i].ref;
-                        window.location.href = "demo1/main.html?id=" + surveyKey;
+                        window.location.href = "neurosound/main.html?id=" + surveyKey;
                     } else {
                         console.log("no")
                     }
