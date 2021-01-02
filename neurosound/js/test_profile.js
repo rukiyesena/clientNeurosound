@@ -75,7 +75,7 @@ $(document).ready(function () {
 
                             },
                         },
-                        { "data": 'notes' },
+
 
                     ],
                     layout: {
@@ -93,13 +93,27 @@ $(document).ready(function () {
                     });
                 }).draw();
                 $('#test_datatable tbody').on('click', 'tr', function () {
-                    $(this).toggleClass('selected');
-                    console.log("in")
-                    for (var i = 0; i < table.rows('.selected').data().length; i++) {
-                        ts_variable = table.rows('.selected').data()[i].ref;
-                        //  location.href = "moxo_test.html?id=" + urlStd + "&ref=" + urlTest + "&ts=" + ts_variable;
+
+                    if ($(this).hasClass('selected')) {
+                        $(this).removeClass('selected');
                     }
+                    else {
+                        table.$('tr.selected').removeClass('selected');
+                        $(this).addClass('selected');
+                    }
+                    ts_variable = table.row('.selected').data().ref;
+                    console.log(ts_variable)
+
                 });
+                /*    $('#test_datatable tbody').on('click', 'tr', function () {
+                           $(this).toggleClass('selected');
+                            
+                            for (var i = 0; i < table.rows('.selected').data().length; i++) {
+                                ts_variable = table.rows('.selected').data()[i].ref;
+                                console.log(ts_variable)
+                                //  location.href = "moxo_test.html?id=" + urlStd + "&ref=" + urlTest + "&ts=" + ts_variable;
+                            }
+                    });*/
                 $('#exampleModalSizeSm').on('click', '#deleteButton', function () {
                     $.ajax({
 
@@ -241,6 +255,7 @@ $(document).ready(function () {
             console.log("testNameValue" + testNameValue)
             console.log("studentname" + studentname)
             $('#testBtn').click(function () {
+                var result = "Girilmedi";
                 var testdate = document.getElementById("kt_datepicker").value;
                 var obj = {
                     test_date: testdate,
@@ -248,6 +263,10 @@ $(document).ready(function () {
                     student_id: urlStd,
                     end_date: testdate,
                     title: testNameValue + "-" + studentname,
+                    status_dikkat: "Girilmedi",
+                    status_zamanlama: "Girilmedi",
+                    status_hiperaktivite: "Girilmedi",
+                    status_durtusellik: "Girilmedi",
                 };
                 urlTs = getUrlParameter("ts");
                 if (urlTs == null) {

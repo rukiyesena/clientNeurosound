@@ -1,6 +1,6 @@
 $(document).ready(function () {
     var deger, test, subtest, teststd, teststd_all;
-    var urlStd, urlTest, urlTS, urlSub;
+    var urlStd, urlTest, urlTS, urlSub, urlSR;
     var studentname, testNameValue;
     var items = [];
     var result_item = [], result_item_name = [];
@@ -9,6 +9,7 @@ $(document).ready(function () {
     urlStd = getUrlParameter("id")
     urlTest = getUrlParameter("ref")
     urlSub = getUrlParameter("sub")
+    urlSR = getUrlParameter("sr")
 
     var test_visibility = document.getElementById('inputsDiv');
 
@@ -39,7 +40,20 @@ $(document).ready(function () {
                     var studentprogram = deger[i].program;
                     var studentprototip = deger[i].profileType;
                     var studenttest = deger[i].testStudents.length;
+                    for (var j = 0; j < studenttest; j++) {
+                        if (urlTS == deger[i].testStudents[j].ref) {
+                            test_date = deger[i].testStudents[j].start;
 
+                        }
+                    }
+                    //test date elde etme ve yazdırma
+                    testdate = convertDate(test_date)
+                    document.getElementById("test_date").value = testdate;
+                    function convertDate(inputFormat) {
+                        function pad(s) { return (s < 10) ? '0' + s : s; }
+                        var d = new Date(inputFormat)
+                        return [pad(d.getDate()), pad(d.getMonth() + 1), d.getFullYear()].join('/')
+                    }
 
                     document.getElementById("studentAd").value = studentname;
                     document.getElementById("studentBirth").value = studentbirth;
@@ -50,9 +64,9 @@ $(document).ready(function () {
                 }
             }
             if (getUrlParameter("id") != null && getUrlParameter("ref") != null && urlTS != null && urlSub != null) {
-                $('#subTestAddBtn').click(function () {
-                    test_visibility.style.visibility = 'visible';
-                })
+
+                test_visibility.style.visibility = 'visible';
+
             }
         } else if (getUrlParameter("id") == null) {
             $('#testName')
@@ -77,63 +91,21 @@ $(document).ready(function () {
                 if (urlTest == test[i].ref) {
                     testNameValue = test[i].test_name;
                     document.getElementById('test_name').value = test[i].test_name;
+                    //   document.getElementById('sub_test_name').value = test[i].test_name;
                 }
             }
         })
-    $.ajax({
-        url: "http://localhost:8080/subtest/listByTestRef/" + urlTest,
-        method: "GET",
-    })
-        .done(function (data, textStatus, jqXHR) {
-            subtest = data;
-        })
-        .fail(function (jqXHR, textStatus, errorThrown) {
-            alert("Error");
-        })
-        .then(function () {
-            for (var i = 0; i < subtest.length; i++) {
-                console.log(subtest[i].ref)
-                if (urlTest == subtest[i].tests_ref) {
 
-                    items[i] = {
-                        "key": subtest[i].ref,
-                        "value": subtest[i].name
-                    };
-                }
-                if (urlSub == subtest[i].ref) {
-                    testNameValue = subtest[i].name;
-                    document.getElementById('sub_test_name').value = subtest[i].name;
-                }
-            }
-            //select içine alt test değerlerini set etmek
-            for (var i = 0; i < items.length; i++) {
-                var opt = items[i].value;
-                var el = document.createElement("option");
-                el.textContent = opt;
-                el.value = opt;
-                test_visible.appendChild(el);
-            }
-            //select te seçilen alt test değerine göre sayfayı yeniler
-            $('#testName').change(function () {
-                for (var i = 0; i < items.length; i++) {
-                    if (items[i].value == $(this).val()) {
-                        itemkey = items[i].key;
-                        itemvalue = items[i].value;
-                        // alert('You selected: ' + $(this).val() + itemkey);
-                        window.location.href = "result_add.html?id=" + urlStd + "&ref=" + urlTest + "&ts=" + urlTS + "&sub=" + itemkey;
-                    }
-                }
-            });
-        })
     $('#subTestAddBtn').click(function () {
         var obj = {
+
             name: testNameValue,
-            students_ref: urlStd,
             test_student_ref: urlTS,
             tests_ref: urlTest,
+            status: "Girilmedi",
         };
-        $.ajax({///student/{students_ref}/teststudent/{test_student_ref}/subtest/{sub_test}
-            url: "http://localhost:8080/subtest/test/" + urlTest + "/student/" + urlStd + "/teststudent/" + urlTS + "/add",
+        $.ajax({////teststudent/{test_student_ref}/tests/{tests_ref}/add
+            url: "http://localhost:8080/subtest/teststudent/" + urlTS + "/tests/" + urlTest + "/add",
             type: "POST",
             data: obj,
             xhrFields: {
@@ -148,26 +120,89 @@ $(document).ready(function () {
                 console.error(errorThrown);
             })
             .then(function () {
-                window.location.href = "result_add.html?id=" + urlStd + "&ref=" + urlTest + "&ts=" + urlTS + "&sub=" + urlSub;
+                window.location.href = "result_add.html?id=" + urlStd + "&ref=" + urlTest + "&ts=" + urlTS;
             })
     })
-    $('#btn_result').click(function () {
-        result_item.push(document.getElementById("result").value)
-        result_item_name.push(testNameValue);
+
+    $.ajax({///teststudent/{test_student_ref}/tests/{tests_ref}
+        url: "http://localhost:8080/subtest/teststudent/" + urlTS + "/tests/" + urlTest,
+        method: "GET",
     })
+        .done(function (data, textStatus, jqXHR) {
+            teststd = data;
+        })
+        .fail(function (jqXHR, textStatus, errorThrown) {
+            alert("Error");
+        })
+        .then(function () {
+
+            if (teststd.length >= 1) {
+                document.getElementById("subTestAddBtn").disabled = true;
+
+            }
+            /*     if (teststd.name =)
+                     if (urlSR != null) {
+                         document.getElementById("testResultAddBtn").disabled = true;
+                     }
+     */
+        //    console.log("teststd_item" + teststd_item)
+            var table = $('#test_datatable').DataTable({
+                "data": teststd,
+                "language": {
+                    "url": "http://cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Turkish.json"
+                },
+                columns: [
+                    { "data": null },
+                    { "data": "name" },
+                    { "data": "status" },
+
+                ],
+                layout: {
+                    scroll: false, // enable/disable datatable scroll both horizontal and vertical when needed.
+                    footer: false, // display/hide footer
+                },
+                "bLengthChange": false,
+                paging: false,
+                searching: false,
+                destroy: true,
+            });
+            table.on('order.dt search.dt', function () {
+                table.column(0, { search: 'applied', order: 'applied' }).nodes().each(function (cell, i) {
+                    cell.innerHTML = i + 1;
+                });
+            }).draw();
+            $('#test_datatable tbody').on('click', 'tr', function () {
+                if ($(this).hasClass('selected')) {
+                    $(this).removeClass('selected');
+                }
+                else {
+                    table.$('tr.selected').removeClass('selected');
+                    $(this).addClass('selected');
+                }
+
+                ts_variable = table.row('.selected').data().ref;
+                if (table.row('.selected').data().status == "Girildi") {
+                    alert("Girilen değer tekrar düzenlenemez. Öğrenci profiline gidiniz.")
+                } else {
+                    location.href = "result_add.html?id=" + urlStd + "&ref=" + urlTest + "&ts=" + urlTS + "&sub=" + ts_variable;
+                }
+
+            });
+
+
+        })
+
+
     $('#testResultAddBtn').click(function () {
 
-        console.log(result_item)
-        console.log(result_item_name)
-        for (var i = 0; i < result_item.length; i++) {
-            var result = result_item[i];
-            var name = result_item_name[i];
+        var result = document.getElementById("result").value;
+        if (result != "") {
             var obj = {
-                name: name,
+                name: testNameValue,
                 result: result,
                 sub_test_ref: urlSub
             };
-            $.ajax({///student/{students_ref}/teststudent/{test_student_ref}/subtest/{sub_test}
+            $.ajax({
                 url: "http://localhost:8080/subtestresult/subtest/" + urlSub,
                 type: "POST",
                 data: obj,
@@ -182,9 +217,60 @@ $(document).ready(function () {
                     alert(obj + "Error" + errorThrown, jqXHR, textStatus);
                     console.error(errorThrown);
                 })
-        }
-        window.location.href = "result_add.html?id=" + urlStd + "&ref=" + urlTest + "&ts=" + urlTS;
 
+            var status = "Girildi";
+
+            var objsub = {
+                name: testNameValue,
+                test_student_ref: urlTS,
+                tests_ref: urlTest,
+                status: status,
+            };
+            $.ajax({///teststudent/{test_student_ref}/tests/{tests_ref}/sub/{ref}/put
+                url: "http://localhost:8080/subtest/teststudent/" + urlTS + "/tests/" + urlTest + "/sub/" + urlSub + "/put",
+                type: "PUT",
+                data: objsub,
+                xhrFields: {
+                    withCredentials: true
+                }
+            })
+                .done(function (data, textStatus, jqXHR) {
+                    console.log("put ok")
+                })
+                .fail(function (jqXHR, textStatus, errorThrown) {
+                    alert(objsub + "Error" + errorThrown, jqXHR, textStatus);
+                    console.error(errorThrown);
+                })
+            var objteststd = {
+                test_date: test_date,
+                test_id: urlTest,
+                student_id: urlStd,
+                end_date: test_date,
+                title: test_name + "-" + studentname,
+                status: status,
+            };
+            $.ajax({
+                url: "http://localhost:8080/teststudent/tests/" + urlTest + "/student/" + urlStd + "/ts/" + urlTS + "/put",
+
+                type: "PUT",
+                data: objteststd,
+                xhrFields: {
+                    withCredentials: true
+                }
+            })
+                .done(function (data, textStatus, jqXHR) {
+                    console.log("put ok")
+                })
+                .fail(function (jqXHR, textStatus, errorThrown) {
+                    alert(objteststd + "Error" + errorThrown, jqXHR, textStatus);
+                    console.error(errorThrown);
+                })
+            window.location.href = "result_add.html?id=" + urlStd + "&ref=" + urlTest + "&ts=" + urlTS;
+
+        }
+        else {
+            alert("lütfen tüm değerleri giriniz")
+        }
 
     })
 

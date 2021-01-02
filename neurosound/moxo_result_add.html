@@ -1618,115 +1618,186 @@
                                         <!--end::List Widget 17-->
                                     </div>
                                     <div class="flex-row-fluid ml-lg-8">
+
                                         <!--begin::Card-->
+                                        <div class="card card-custom gutter-b example-hover" style="margin-top: 10px;">
 
-                                        <div class="card card-custom gutter-bs" style="margin-top: 10px;">
-                                            <form class="form" id="kt_form">
-                                                <div class="card-body">
-                                                    <div class="card card-custom gutter-b">
+                                            <div class="card-body">
 
-                                                        <div class="card-body">
-                                                            <!--begin::Example-->
-                                                            <div class="example example-basic">
+                                                <div class="row">
 
-                                                                <div class="example-preview row"
-                                                                    style="align-items: center;">
+                                                    <!--begin::Stats Widget 6-->
+                                                    <div class="card card-custom card-stretch gutter-b"
+                                                        style="width: 100%;">
+                                                        <!--begin::Body-->
+                                                        <div class="card-body d-flex align-items-center py-0 ">
+                                                            <div class="d-flex flex-column flex-grow-1 py-2 py-lg-5">
+                                                                <input id="test_name"
+                                                                    class="card-title font-weight-bolder text-dark-75 font-size-h5 mb-2 text-hover-primary"
+                                                                    style="border: none; background: none;" readonly>
 
-                                                                    <div class="col-sm-6">
-                                                                        <div class=" row"
-                                                                            data-wizard-type="step-content"
+                                                                <input id="test_date"
+                                                                    class="font-weight-bold text-muted font-size-lg"
+                                                                    style="border: none;" readonly>
+                                                            </div>
+                                                            <img src="https://preview.keenthemes.com/metronic/theme/html/demo1/dist/assets/media/svg/avatars/004-boy-1.svg"
+                                                                alt="" class="align-self-end h-70px">
+                                                        </div>
+                                                        <!--end::Body-->
+                                                    </div>
+                                                    <!--end::Stats Widget 6-->
+
+                                                </div>
+
+                                                <!--begin::Accordion-->
+                                                <div class="accordion accordion-toggle-arrow" id="accordionExample1">
+                                                    <div class="card">
+                                                        <div class="card-header">
+                                                            <div class="card-title" data-toggle="collapse"
+                                                                data-target="#collapseOne1">
+                                                                <input id="test_name1"
+                                                                    class="card-title font-weight-bolder text-dark-75 font-size-h5 mb-2 text-hover-primary"
+                                                                    style="border: none; background: none;" readonly>
+
+                                                            </div>
+                                                        </div>
+                                                        <div id="collapseOne1" class="collapse show"
+                                                            data-parent="#accordionExample1">
+
+                                                            <div class="card card-custom gutter-b">
+
+                                                                <div class="card-body">
+                                                                    <!--begin::Example-->
+                                                                    <div class="example example-basic">
+
+                                                                        <div class="example-preview "
                                                                             style="align-items: center;">
-
-                                                                            <!--begin::Input-->
-                                                                            <div
-                                                                                class=" fv-plugins-icon-container col-sm-12">
-
-                                                                                <select name="testName"
-                                                                                    class="col-form-label text-center col-sm-12 form-control form-control-solid form-control-lg"
-                                                                                    id="testName">
-                                                                                    <option value="">Alt Test Seçiniz
-                                                                                    </option>
-                                                                                </select>
-                                                                                <div
-                                                                                    class="fv-plugins-message-container">
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-
-                                                                    <div class="col-sm-6">
-                                                                        <div class="row">
-
-                                                                            <!--begin::Stats Widget 6-->
-                                                                            <div class="card card-custom card-stretch gutter-b"
-                                                                                style="width: 100%;">
-                                                                                <!--begin::Body-->
-                                                                                <div
-                                                                                    class="card-body d-flex align-items-center py-0 ">
-                                                                                    <div
-                                                                                        class="d-flex flex-column flex-grow-1 py-2 py-lg-5">
-                                                                                        <input id="test_name"
-                                                                                            class="card-title font-weight-bolder text-dark-75 font-size-h5 mb-2 text-hover-primary"
-                                                                                            style="border: none;"
-                                                                                            readonly>
-                                                                                        <input id="sub_test_name"
-                                                                                            class="font-weight-bold text-muted font-size-lg"
-                                                                                            style="border: none;"
-                                                                                            readonly>
+                                                                            <form class="form row">
+                                                                                <div class="col-sm-12">
+                                                                                    <div class="form-group row">
+                                                                                        <label
+                                                                                            class="col-2 col-form-label">Alt
+                                                                                            Testler</label>
+                                                                                        <div
+                                                                                            class="col-9 col-form-label">
+                                                                                            <div class="radio-inline">
+                                                                                                <label
+                                                                                                    class="radio radio-success">
+                                                                                                    <input type="radio"
+                                                                                                        id="dikkat"
+                                                                                                        name="radios5" />
+                                                                                                    <span></span>Dikkat</label>
+                                                                                                <label
+                                                                                                    class="radio radio-success">
+                                                                                                    <input type="radio"
+                                                                                                        id="zamanlama"
+                                                                                                        name="radios5" />
+                                                                                                    <span></span>Zamanlama</label>
+                                                                                                <label
+                                                                                                    class="radio radio-success ">
+                                                                                                    <input type="radio"
+                                                                                                        id="durtusellik"
+                                                                                                        name="radios5" />
+                                                                                                    <span></span>Dürtüsellik</label>
+                                                                                                <label
+                                                                                                    class="radio radio-success">
+                                                                                                    <input type="radio"
+                                                                                                        id="hiperaktivite"
+                                                                                                        name="radios5" />
+                                                                                                    <span></span>Hiperaktivite</label>
+                                                                                            </div>
+                                                                                            <span
+                                                                                                class="form-text text-muted">Birini
+                                                                                                seçiniz</span>
+                                                                                        </div>
                                                                                     </div>
-                                                                                    <img src="https://preview.keenthemes.com/metronic/theme/html/demo1/dist/assets/media/svg/avatars/004-boy-1.svg"
-                                                                                        alt=""
-                                                                                        class="align-self-end h-70px">
                                                                                 </div>
-                                                                                <!--end::Body-->
-                                                                            </div>
-                                                                            <!--end::Stats Widget 6-->
+
+                                                                                <div class="col-sm-6">
+                                                                                    <div class="row">
+                                                                                        <div
+                                                                                            class="col-lg-9 ml-lg-auto">
+                                                                                            <button type="button"
+                                                                                                id="subTestAddBtn"
+                                                                                                class="btn btn-primary mr-2">İlerle</button>
+                                                                                            <button type="reset"
+                                                                                                class="btn btn-light-primary">İptal</button>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </form>
 
                                                                         </div>
+
                                                                     </div>
-                                                                    <div class="col-sm-12" style="margin-bottom: 30px;">
-                                                                        <button type="button"
-                                                                            class="btn mr-2 btn btn-success btn-lg col-sm-12"
-                                                                            id="subTestAddBtn">İlerle</button>
-                                                                    </div>
+                                                                    <!--end::Example-->
+                                                                </div>
+                                                                <div class="card-body">
+
                                                                     <div class="card card-custom gutter-b"
                                                                         style="padding: 50px">
                                                                         <table
                                                                             class="table table-separate table-head-custom table-checkable"
-                                                                            id="sub_test_datatable">
+                                                                            id="test_datatable">
                                                                             <thead>
                                                                                 <tr>
                                                                                     <th>#</th>
-                                                                                    <th>Test AdI</th>
-                                                                                    <th>Test TARİHİ</th>
-                                                                                    <th>TEST SONUCU</th>
-                                                                                    <th></th>
-                                                                                    <th></th>
+                                                                                    <th>Test AdI
+                                                                                    </th>
+                                                                                    <th>Test Durumu
+                                                                                    </th>
 
                                                                                 </tr>
                                                                             </thead>
                                                                         </table>
                                                                     </div>
-                                                                    <div class="separator separator-dashed mt-3 mb-8">
-                                                                    </div>
-                                                                    <div class="col-sm-12">
-                                                                        <div class="row " id="inputsDiv">
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="card">
+                                                        <div class="card-header">
+                                                            <div class="card-title collapsed" data-toggle="collapse"
+                                                                data-target="#collapseThree1">
+                                                                <input id="sub_test_name"
+                                                                    class="card-title font-weight-bolder text-dark-75 font-size-h5 mb-2 text-hover-primary"
+                                                                    style="border: none; background: none;" readonly>
+
+                                                            </div>
+                                                        </div>
+                                                        <div id="collapseThree1" class="collapse show"
+                                                            data-parent="#accordionExample1">
+                                                            <div class="card-body">
+
+                                                                <div class="col-sm-12">
+                                                                    <div class="row " id="inputsDiv">
+                                                                        <form
+                                                                            class="form fv-plugins-bootstrap fv-plugins-framework row"
+                                                                            id="kt_form">
+
+
                                                                             <div class="col-sm-6">
-                                                                                <div class="form-group row">
+
+                                                                                <div
+                                                                                    class="form-group fv-plugins-icon-container row">
                                                                                     <label
                                                                                         class="col-form-label col-sm-3 text-right">Temel-1:
                                                                                     </label>
                                                                                     <div class="col-sm-6">
-                                                                                        <div class="input-group">
-                                                                                            <input type="text"
-                                                                                                id="temel_1"
-                                                                                                class="form-control"
-                                                                                                placeholder="Test Sonucu" />
 
-                                                                                        </div>
+                                                                                        <input type="text" id="temel_1"
+                                                                                            class="form-control"
+                                                                                            name="temel_1"
+                                                                                            placeholder="Test Sonucu" />
                                                                                         <span
-                                                                                            class="form-text text-muted">Test
-                                                                                            Sonucu</span>
+                                                                                            class="form-text text-muted">Lütfen
+                                                                                            test değerini
+                                                                                            girin.</span>
+                                                                                        <div
+                                                                                            class="fv-plugins-message-container">
+                                                                                        </div>
                                                                                     </div>
                                                                                     <div class="col-sm-3">
                                                                                         <button type="button"
@@ -1735,21 +1806,26 @@
                                                                                                 class=" ki ki-bold-check-1"></i></button>
                                                                                     </div>
                                                                                 </div>
-                                                                                <div class="form-group row">
+                                                                                <div
+                                                                                    class="form-group row fv-plugins-icon-container">
                                                                                     <label
                                                                                         class="col-form-label col-sm-3 text-right">Görsel-1:
                                                                                     </label>
                                                                                     <div class="col-sm-6">
-                                                                                        <div class="input-group">
-                                                                                            <input type="text"
-                                                                                                id="gorsel_1"
-                                                                                                class="form-control"
-                                                                                                placeholder="Test Sonucu" />
 
-                                                                                        </div>
+                                                                                        <input type="text" id="gorsel_1"
+                                                                                            name="gorsel_1"
+                                                                                            class="form-control"
+                                                                                            placeholder="Test Sonucu" />
                                                                                         <span
-                                                                                            class="form-text text-muted">Test
-                                                                                            Sonucu</span>
+                                                                                            class="form-text text-muted">Lütfen
+                                                                                            test değerini
+                                                                                            girin.</span>
+                                                                                        <div
+                                                                                            class="fv-plugins-message-container">
+                                                                                        </div>
+
+
                                                                                     </div>
                                                                                     <div class="col-sm-3">
                                                                                         <button type="button"
@@ -1758,21 +1834,25 @@
                                                                                                 class=" ki ki-bold-check-1"></i></button>
                                                                                     </div>
                                                                                 </div>
-                                                                                <div class="form-group row">
+                                                                                <div
+                                                                                    class="form-group row fv-plugins-icon-container">
                                                                                     <label
                                                                                         class="col-form-label col-sm-3 text-right">Görsel-2:
                                                                                     </label>
                                                                                     <div class="col-sm-6">
-                                                                                        <div class="input-group">
-                                                                                            <input type="text"
-                                                                                                id="gorsel_2"
-                                                                                                class="form-control"
-                                                                                                placeholder="Test Sonucu" />
 
-                                                                                        </div>
+                                                                                        <input type="text" id="gorsel_2"
+                                                                                            name="gorsel_2"
+                                                                                            class="form-control"
+                                                                                            placeholder="Test Sonucu" />
                                                                                         <span
-                                                                                            class="form-text text-muted">Test
-                                                                                            Sonucu</span>
+                                                                                            class="form-text text-muted">Lütfen
+                                                                                            test değerini
+                                                                                            girin.</span>
+                                                                                        <div
+                                                                                            class="fv-plugins-message-container">
+                                                                                        </div>
+
                                                                                     </div>
                                                                                     <div class="col-sm-3">
                                                                                         <button type="button"
@@ -1781,21 +1861,26 @@
                                                                                                 class=" ki ki-bold-check-1"></i></button>
                                                                                     </div>
                                                                                 </div>
-                                                                                <div class="form-group row">
+                                                                                <div
+                                                                                    class="form-group row fv-plugins-icon-container">
                                                                                     <label
                                                                                         class="col-form-label col-sm-3 text-right">İşitsel-1:
                                                                                     </label>
                                                                                     <div class="col-sm-6">
-                                                                                        <div class="input-group">
-                                                                                            <input type="text"
-                                                                                                id="isitsel_1"
-                                                                                                class="form-control"
-                                                                                                placeholder="Test Sonucu" />
 
-                                                                                        </div>
+                                                                                        <input type="text"
+                                                                                            id="isitsel_1"
+                                                                                            name="isitsel_1"
+                                                                                            class="form-control"
+                                                                                            placeholder="Test Sonucu" />
                                                                                         <span
-                                                                                            class="form-text text-muted">Test
-                                                                                            Sonucu</span>
+                                                                                            class="form-text text-muted">Lütfen
+                                                                                            test değerini
+                                                                                            girin.</span>
+                                                                                        <div
+                                                                                            class="fv-plugins-message-container">
+                                                                                        </div>
+
                                                                                     </div>
                                                                                     <div class="col-sm-3">
                                                                                         <button type="button"
@@ -1807,21 +1892,26 @@
 
                                                                             </div>
                                                                             <div class="col-sm-6">
-                                                                                <div class="form-group row">
+                                                                                <div
+                                                                                    class="form-group row fv-plugins-icon-container">
                                                                                     <label
                                                                                         class="col-form-label col-sm-3 text-right">İşitsel-2:
                                                                                     </label>
                                                                                     <div class="col-sm-6">
-                                                                                        <div class="input-group">
-                                                                                            <input type="text"
-                                                                                                id="isitsel_2"
-                                                                                                class="form-control"
-                                                                                                placeholder="Test Sonucu" />
 
-                                                                                        </div>
+                                                                                        <input type="text"
+                                                                                            name="isitsel_2"
+                                                                                            id="isitsel_2"
+                                                                                            class="form-control"
+                                                                                            placeholder="Test Sonucu" />
                                                                                         <span
-                                                                                            class="form-text text-muted">Test
-                                                                                            Sonucu</span>
+                                                                                            class="form-text text-muted">Lütfen
+                                                                                            test değerini
+                                                                                            girin.</span>
+                                                                                        <div
+                                                                                            class="fv-plugins-message-container">
+                                                                                        </div>
+
                                                                                     </div>
                                                                                     <div class="col-sm-3">
                                                                                         <button type="button"
@@ -1830,21 +1920,26 @@
                                                                                                 class=" ki ki-bold-check-1"></i></button>
                                                                                     </div>
                                                                                 </div>
-                                                                                <div class="form-group row">
+                                                                                <div
+                                                                                    class="form-group row fv-plugins-icon-container">
                                                                                     <label
                                                                                         class="col-form-label col-sm-3 text-right">Birleşik-1:
                                                                                     </label>
                                                                                     <div class="col-sm-6">
-                                                                                        <div class="input-group">
-                                                                                            <input type="text"
-                                                                                                id="birlesik_1"
-                                                                                                class="form-control"
-                                                                                                placeholder="Test Sonucu" />
 
-                                                                                        </div>
+                                                                                        <input type="text"
+                                                                                            name="birlesik_1"
+                                                                                            id="birlesik_1"
+                                                                                            class="form-control"
+                                                                                            placeholder="Test Sonucu" />
                                                                                         <span
-                                                                                            class="form-text text-muted">Test
-                                                                                            Sonucu</span>
+                                                                                            class="form-text text-muted">Lütfen
+                                                                                            test değerini
+                                                                                            girin.</span>
+                                                                                        <div
+                                                                                            class="fv-plugins-message-container">
+                                                                                        </div>
+
                                                                                     </div>
                                                                                     <div class="col-sm-3">
                                                                                         <button type="button"
@@ -1853,21 +1948,26 @@
                                                                                                 class=" ki ki-bold-check-1"></i></button>
                                                                                     </div>
                                                                                 </div>
-                                                                                <div class="form-group row">
+                                                                                <div
+                                                                                    class="form-group row fv-plugins-icon-container">
                                                                                     <label
                                                                                         class="col-form-label col-sm-3 text-right">Birleşik-2:
                                                                                     </label>
                                                                                     <div class="col-sm-6">
-                                                                                        <div class="input-group">
-                                                                                            <input type="text"
-                                                                                                id="birlesik_2"
-                                                                                                class="form-control"
-                                                                                                placeholder="Test Sonucu" />
 
-                                                                                        </div>
+                                                                                        <input type="text"
+                                                                                            name="birlesik_2"
+                                                                                            id="birlesik_2"
+                                                                                            class="form-control"
+                                                                                            placeholder="Test Sonucu" />
                                                                                         <span
-                                                                                            class="form-text text-muted">Test
-                                                                                            Sonucu</span>
+                                                                                            class="form-text text-muted">Lütfen
+                                                                                            test değerini
+                                                                                            girin.</span>
+                                                                                        <div
+                                                                                            class="fv-plugins-message-container">
+                                                                                        </div>
+
                                                                                     </div>
                                                                                     <div class="col-sm-3">
                                                                                         <button type="button"
@@ -1876,21 +1976,24 @@
                                                                                                 class=" ki ki-bold-check-1"></i></button>
                                                                                     </div>
                                                                                 </div>
-                                                                                <div class="form-group row">
+                                                                                <div class="form-group row ">
                                                                                     <label
                                                                                         class="col-form-label col-sm-3 text-right">Temel-2:
                                                                                     </label>
                                                                                     <div class="col-sm-6">
-                                                                                        <div class="input-group">
-                                                                                            <input type="text"
-                                                                                                id="temel_2"
-                                                                                                class="form-control"
-                                                                                                placeholder="Test Sonucu" />
 
-                                                                                        </div>
+                                                                                        <input type="text" id="temel_2"
+                                                                                            class="form-control"
+                                                                                            name="temel_2"
+                                                                                            placeholder="Test Sonucu" />
                                                                                         <span
-                                                                                            class="form-text text-muted">Test
-                                                                                            Sonucu</span>
+                                                                                            class="form-text text-muted">Lütfen
+                                                                                            test değerini
+                                                                                            girin.</span>
+                                                                                        <div
+                                                                                            class="fv-plugins-message-container">
+                                                                                        </div>
+
                                                                                     </div>
                                                                                     <div class="col-sm-3">
                                                                                         <button type="button"
@@ -1904,41 +2007,58 @@
 
                                                                             </div>
 
-                                                                        </div>
+
+                                                                            <div
+                                                                                class="separator separator-dashed my-10">
+                                                                            </div>
+                                                                            <div class="col-sm-12">
+                                                                                <div class="row">
+                                                                                    <div class="col-sm-2">
+
+                                                                                    </div>
+                                                                                    <div class="col-sm-4">
+                                                                                        <div class="">
+
+                                                                                            <button type="button"
+                                                                                                class="btn mr-2 btn btn-success btn-lg col-sm-12"
+                                                                                                id="testMoxoAddBtn">Kaydet</button>
+
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="col-sm-4">
+                                                                                        <div class="">
+                                                                                            <button type="reset"
+                                                                                                class="btn btn-light-primary btn-lg col-sm-12">İptal</button>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="col-sm-2">
+
+                                                                                    </div>
+
+                                                                                </div>
+
+
+                                                                            </div>
+                                                                        </form>
+
+
                                                                     </div>
                                                                 </div>
-
                                                             </div>
-                                                            <!--end::Example-->
                                                         </div>
                                                     </div>
-                                                    <div class="" id="test_content_visible">
+                                                </div>
+                                                <!--end::Accordion-->
+
+                                            </div>
+                                        </div>
+                                        <div class="card-body">
+
+                                            <div class="" id="test_content_visible">
 
 
-                                                        <div class="separator separator-dashed my-10"></div>
-                                                        <div class="row">
-                                                            <div class="col-sm-2">
-                                                            </div>
-                                                            <div class="col-sm-4">
-                                                                <div class="">
 
-                                                                    <button type="button"
-                                                                        class="btn mr-2 btn btn-success btn-lg col-sm-12"
-                                                                        id="testMoxoAddBtn">Kaydet</button>
-
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-sm-4">
-                                                                <div class="">
-                                                                    <button type="reset"
-                                                                        class="btn btn-light-primary btn-lg col-sm-12">İptal</button>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-sm-2">
-                                                            </div>
-
-                                                        </div>
-                                                        <!--  <div class="row">
+                                                <!--  <div class="row">
                                                             <div class="col-lg-12 d-flex flex-column">
                                                                 
                                                                 <div class="flex-grow-1 bg-danger p-8 rounded-xl flex-grow-1 bgi-no-repeat row"
@@ -1963,10 +2083,10 @@
 
                                                         </div>-->
 
-                                                    </div>
-                                                </div>
-                                            </form>
+                                            </div>
                                         </div>
+
+
                                         <!--end::Card
                                         onkeyup="showMe4(this)"
                                     -->
@@ -2405,6 +2525,7 @@
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
     <script src="../theme/html/demo1/dist/assets/plugins/custom/datatables/datatables.bundle1ff3.js"></script>
     <script src="../theme/html/demo1/dist/assets/plugins/custom/fullcalendar/fullcalendar.bundle1ff3.js"></script>
+
     <!--end::Page Vendors-->
     <!--begin::Page Scripts(used by this page)-->
     <script src="js/main.js"></script>

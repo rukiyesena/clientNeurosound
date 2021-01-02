@@ -1621,6 +1621,7 @@
                                         <!--begin::Card-->
 
                                         <div class="card card-custom gutter-bs" style="margin-top: 10px;">
+
                                             <form class="form" id="kt_form">
                                                 <div class="card-body">
                                                     <div class="card card-custom gutter-b">
@@ -1644,9 +1645,13 @@
                                                                                         class="d-flex flex-column flex-grow-1 py-2 py-lg-5">
                                                                                         <input id="test_name"
                                                                                             class="card-title font-weight-bolder text-dark-75 font-size-h5 mb-2 text-hover-primary"
-                                                                                            style="border: none;"
+                                                                                            style="border: none; background: none;"
                                                                                             readonly>
 
+                                                                                        <input id="test_date"
+                                                                                            class="font-weight-bold text-muted font-size-lg"
+                                                                                            style="border: none;"
+                                                                                            readonly>
                                                                                     </div>
                                                                                     <img src="https://preview.keenthemes.com/metronic/theme/html/demo1/dist/assets/media/svg/avatars/004-boy-1.svg"
                                                                                         alt=""
@@ -1666,9 +1671,29 @@
 
                                                                     <div class="separator separator-dashed mt-3 mb-8">
                                                                     </div>
+                                                                    <div class="card-body">
+
+                                                                        <div class="card card-custom gutter-b"
+                                                                            style="padding: 50px">
+                                                                            <table
+                                                                                class="table table-separate table-head-custom table-checkable"
+                                                                                id="test_datatable">
+                                                                                <thead>
+                                                                                    <tr>
+                                                                                        <th>#</th>
+                                                                                        <th>Test AdI
+                                                                                        </th>
+                                                                                        <th>Test Durumu
+                                                                                        </th>
+                                                                                       
+                                                                                    </tr>
+                                                                                </thead>
+                                                                            </table>
+                                                                        </div>
+                                                                    </div>
                                                                     <div class="col-sm-12">
                                                                         <div class="row " id="inputsDiv">
-                                                                            <div class="col-sm-6">
+                                                                            <div class="col-sm-12">
                                                                                 <div class="form-group row">
                                                                                     <label
                                                                                         class="col-form-label col-sm-3 text-right">Temel-1:
@@ -1685,20 +1710,39 @@
                                                                                             class="form-text text-muted">Test
                                                                                             Sonucu</span>
                                                                                     </div>
-                                                                                    <div class="col-sm-3">
-                                                                                        <button type="button"
-                                                                                            id="btn_result"
-                                                                                            class="btn btn-outline-success mr-2"><i
-                                                                                                class=" ki ki-bold-check-1"></i></button>
+
+                                                                                </div>
+
+
+                                                                            </div>
+                                                                            <div class="col-sm-12">
+                                                                                <div class="row">
+                                                                                    <div class="col-sm-2">
+                                                                                    </div>
+                                                                                    <div class="col-sm-4">
+                                                                                        <div class="">
+
+                                                                                            <button type="button"
+                                                                                                class="btn mr-2 btn btn-success btn-lg col-sm-12"
+                                                                                                id="testResultAddBtn">Kaydet</button>
+
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="col-sm-4">
+                                                                                        <div class="">
+                                                                                            <button type="reset"
+                                                                                                class="btn btn-light-primary btn-lg col-sm-12">İptal</button>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="col-sm-2">
                                                                                     </div>
                                                                                 </div>
 
 
                                                                             </div>
-
                                                                         </div>
                                                                     </div>
-                                                                    
+
                                                                 </div>
 
                                                             </div>
@@ -1709,28 +1753,7 @@
 
 
                                                         <div class="separator separator-dashed my-10"></div>
-                                                        <div class="row">
-                                                            <div class="col-sm-2">
-                                                            </div>
-                                                            <div class="col-sm-4">
-                                                                <div class="">
 
-                                                                    <button type="button"
-                                                                        class="btn mr-2 btn btn-success btn-lg col-sm-12"
-                                                                        id="testResultAddBtn">Kaydet</button>
-
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-sm-4">
-                                                                <div class="">
-                                                                    <button type="reset"
-                                                                        class="btn btn-light-primary btn-lg col-sm-12">İptal</button>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-sm-2">
-                                                            </div>
-
-                                                        </div>
                                                         <!--  <div class="row">
                                                             <div class="col-lg-12 d-flex flex-column">
                                                                 

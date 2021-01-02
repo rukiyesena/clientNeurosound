@@ -296,7 +296,7 @@ $(document).ready(function () {
 
                                         },
                                     },
-                                    { "data": "result" },
+                                    { "data": "status" },
                                     {
                                         sortable: false,
                                         width: 10,
