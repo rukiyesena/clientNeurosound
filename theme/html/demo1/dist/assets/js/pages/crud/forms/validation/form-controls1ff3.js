@@ -69,6 +69,13 @@ var KTFormControls = function () {
 							}
 						}
 					},
+					testName:{
+						validators:{
+							notEmpty:{
+								message: 'Lütfen seçiniz'
+							}
+						}
+					},
 
 					options: {
 						validators: {

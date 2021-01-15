@@ -22,7 +22,7 @@ $(document).ready(function () {
                     start: teststdArr[i].start,
                     end: teststdArr[i].end,
                     title: teststdArr[i].title,
-                    result: teststdArr[i].result
+                    result: teststdArr[i].status
                 };
             }
             console.log("itemsStd " + itemsStd)
@@ -68,10 +68,10 @@ $(document).ready(function () {
                     console.log("std_start " + std_start);
 
 
-                    if (std_result == "" & d < std_start) {
+                    if (std_result == "Girilmedi" & d < std_start) {
                         console.log("in")
                         info.el.style.backgroundColor = '#FFF4DE';
-                    } else if (std_result == "" & d > std_start) {
+                    } else if (std_result == "Girilmedi" & d > std_start) {
                         info.el.style.backgroundColor = '#FFE2E5';
                     }
                     else {

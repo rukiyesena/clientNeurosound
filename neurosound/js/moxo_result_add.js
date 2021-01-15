@@ -1,16 +1,19 @@
 
 $(document).ready(function () {
-    var deger, test, subtest, teststd, teststd_all;
+    var deger, test, subtest, teststd, teststd_all, subtestresult;
     var itemvalue, itemkey, subtest_name;
-    var urlStd, urlTest, urlTS, urlSub;
+    var urlStd, urlTest, urlTS, urlSub, urlSR;
     var studentname, sub_test_name, testdate, test_date, test_name;
     var items = [];
+    var genel = [];
     var result_item = [], result_item_name = [];
     var general_result_length;
     urlTS = getUrlParameter("ts")
     urlStd = getUrlParameter("id")
     urlTest = getUrlParameter("ref")
     urlSub = getUrlParameter("sub")
+    urlSR = getUrlParameter("sr")
+
 
     var collapseOne1 = document.getElementById('collapseOne1');
     var collapseThree1 = document.getElementById('collapseThree1');
@@ -150,14 +153,15 @@ $(document).ready(function () {
 
             //tablo içine subtest verilerini set etme
             var table = $('#test_datatable').DataTable({
-                "data": teststd,
+                data: teststd,
                 "language": {
                     "url": "http://cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Turkish.json"
                 },
                 columns: [
-                    { "data": null },
-                    { "data": "name" },
-                    { "data": "status" },
+                    { data: null },
+                    { data: "name" },
+                    { data: "status" },
+                    //    { data: 'subTestResults.0.result' },
 
                 ],
                 layout: {
@@ -185,7 +189,9 @@ $(document).ready(function () {
                 }
                 ts_variable = table.row('.selected').data().ref;
                 if (table.row('.selected').data().status == "Girildi") {
-                    alert("Girilen değer tekrar düzenlenemez. Öğrenci profiline gidiniz.")
+                    //  alert("Girilen değer tekrar düzenlenemez. Öğrenci profiline gidiniz.")
+                    str_variable = table.row('.selected').data().subTestResults[0].ref;
+                    location.href = "moxo_result_add.html?id=" + urlStd + "&ref=" + urlTest + "&ts=" + urlTS + "&sub=" + ts_variable + "&sr=" + str_variable;
                 } else {
                     location.href = "moxo_result_add.html?id=" + urlStd + "&ref=" + urlTest + "&ts=" + urlTS + "&sub=" + ts_variable;
                 }
@@ -299,6 +305,87 @@ $(document).ready(function () {
                 }
             })
     }
+    if (urlSR != null) {
+        $.ajax({//subtest/{sub_test_ref}/list
+            url: "http://localhost:8080/subtestresult/subtest/" + urlSub + "/list",
+            method: "GET",
+        })
+            .done(function (data, textStatus, jqXHR) {
+                subtestresult = data;
+            })
+            .fail(function (jqXHR, textStatus, errorThrown) {
+                alert("Error");
+            })
+            .then(function () {
+
+                for (var i = 0; i < subtestresult.length; i++) {
+                    if (subtestresult[i].name == "Temel-1") {
+                        genel[i] = {
+                            key: subtestresult[i].ref,
+                            name: subtestresult[i].name,
+                            result: subtestresult[i].result,
+                        }
+                        document.getElementById("temel_1").value = subtestresult[i].result
+                    } if (subtestresult[i].name == "Temel-2") {
+                        genel[i] = {
+                            key: subtestresult[i].ref,
+                            name: subtestresult[i].name,
+                            result: subtestresult[i].result,
+
+                        }
+                        document.getElementById("temel_2").value = subtestresult[i].result
+                    } if (subtestresult[i].name == "Görsel-1") {
+                        genel[i] = {
+                            key: subtestresult[i].ref,
+                            name: subtestresult[i].name,
+                            result: subtestresult[i].result,
+
+                        }
+                        document.getElementById("gorsel_1").value = subtestresult[i].result
+                    } if (subtestresult[i].name == "Görsel-2") {
+                        genel[i] = {
+                            key: subtestresult[i].ref,
+                            name: subtestresult[i].name,
+                            result: subtestresult[i].result,
+
+                        }
+                        document.getElementById("gorsel_2").value = subtestresult[i].result
+                    } if (subtestresult[i].name == "İşitsel-1") {
+                        genel[i] = {
+                            key: subtestresult[i].ref,
+                            name: subtestresult[i].name,
+                            result: subtestresult[i].result,
+
+                        }
+                        document.getElementById("isitsel_1").value = subtestresult[i].result
+                    } if (subtestresult[i].name == "İşitsel-2") {
+                        genel[i] = {
+                            key: subtestresult[i].ref,
+                            name: subtestresult[i].name,
+                            result: subtestresult[i].result,
+
+                        }
+                        document.getElementById("isitsel_2").value = subtestresult[i].result
+                    } if (subtestresult[i].name == "Birleşik-1") {
+                        genel[i] = {
+                            key: subtestresult[i].ref,
+                            name: subtestresult[i].name,
+                            result: subtestresult[i].result,
+
+                        }
+                        document.getElementById("birlesik_1").value = subtestresult[i].result
+                    } if (subtestresult[i].name == "Birleşik-2") {
+                        genel[i] = {
+                            key: subtestresult[i].ref,
+                            name: subtestresult[i].name,
+                            result: subtestresult[i].result,
+
+                        }
+                        document.getElementById("birlesik_2").value = subtestresult[i].result
+                    }
+                }
+            })
+    }
 
     //alt test result post işlemi için arraye verilerin eklenmesi
     $('#testMoxoAddBtn').click(function () {
@@ -314,64 +401,116 @@ $(document).ready(function () {
             result_item = [temel_1, gorsel_1, gorsel_2, isitsel_1, isitsel_2, birlesik_1, birlesik_2, temel_2];
         }
         result_item_name = ["Temel-1", "Görsel-1", "Görsel-2", "İşitsel-1", "İşitsel-2", "Birleşik-1", "Birleşik-2", "Temel-2"]
+        var genel_result = [];
+        for (var i = 0; i < result_item.length; i++) {
 
-        if (result_item.length == 8) {
+            genel_result[i] = {
+                result: result_item[i],
+                name: result_item_name[i]
+            }
+
+        }
+        console.log(genel)
+        console.log(genel_result)
+        if (urlSR != null) {
+            for (var i = 0; i < genel.length; i++) {
+                for (var j = 0; j < genel_result.length; j++) {
+                    if (genel[i].name == genel_result[j].name) {
+
+                        var putobj = {
+                            name: genel[i].name,
+                            result: genel_result[j].result,
+                            sub_test_ref: urlSub
+                        };
+                        $.ajax({///subtest/{sub_test}/ref/{ref}/put
+                            url: "http://localhost:8080/subtestresult/subtest/" + urlSub + "/ref/" + genel[i].key + "/put",
+                            type: "PUT",
+                            data: putobj,
+                            xhrFields: {
+                                withCredentials: true
+                            }
+                        })
+                            .done(function (data, textStatus, jqXHR) {
+                                console.log("ok")
+                            })
+                            .fail(function (jqXHR, textStatus, errorThrown) {
+                                alert(obj + "Error" + errorThrown, jqXHR, textStatus);
+                                console.error(errorThrown);
+                            })
+                            .then(function () {
+                                window.location.href = "moxo_result_add.html?id=" + urlStd + "&ref=" + urlTest + "&ts=" + urlTS;
+
+                            })
+                    }
 
 
-            for (var i = 0; i < result_item.length; i++) {
+                }
 
-                var obj = {
-                    name: result_item_name[i],
-                    result: result_item[i],
-                    sub_test_ref: urlSub
+
+            }
+
+
+
+        } else {
+            if (result_item.length == 8) {
+
+
+                for (var i = 0; i < result_item.length; i++) {
+                    var obj = {
+                        name: result_item_name[i],
+                        result: result_item[i],
+                        sub_test_ref: urlSub
+                    };
+
+
+                    $.ajax({
+                        url: "http://localhost:8080/subtestresult/subtest/" + urlSub,
+                        type: "POST",
+                        data: obj,
+                        xhrFields: {
+                            withCredentials: true
+                        }
+                    })
+                        .done(function (data, textStatus, jqXHR) {
+                            console.log("ok")
+                        })
+                        .fail(function (jqXHR, textStatus, errorThrown) {
+                            alert(obj + "Error" + errorThrown, jqXHR, textStatus);
+                            console.error(errorThrown);
+                        })
+                }
+
+
+                var status = "Girildi";
+                var objsub = {
+                    name: sub_test_name,
+                    test_student_ref: urlTS,
+                    tests_ref: urlTest,
+                    status: status,
                 };
-                $.ajax({
-                    url: "http://localhost:8080/subtestresult/subtest/" + urlSub,
-                    type: "POST",
-                    data: obj,
+                $.ajax({///teststudent/{test_student_ref}/tests/{tests_ref}/sub/{ref}/put
+                    url: "http://localhost:8080/subtest/teststudent/" + urlTS + "/tests/" + urlTest + "/sub/" + urlSub + "/put",
+                    type: "PUT",
+                    data: objsub,
                     xhrFields: {
                         withCredentials: true
                     }
                 })
                     .done(function (data, textStatus, jqXHR) {
-                        console.log("ok")
+                        console.log("put ok")
                     })
                     .fail(function (jqXHR, textStatus, errorThrown) {
-                        alert(obj + "Error" + errorThrown, jqXHR, textStatus);
+                        alert(objsub + "Error" + errorThrown, jqXHR, textStatus);
                         console.error(errorThrown);
                     })
+
+                window.location.href = "moxo_result_add.html?id=" + urlStd + "&ref=" + urlTest + "&ts=" + urlTS;
+
             }
-            alert(sub_test_name)
-            var status = "Girildi";
-            var objsub = {
-                name: sub_test_name,
-                test_student_ref: urlTS,
-                tests_ref: urlTest,
-                status: status,
-            };
-            $.ajax({///teststudent/{test_student_ref}/tests/{tests_ref}/sub/{ref}/put
-                url: "http://localhost:8080/subtest/teststudent/" + urlTS + "/tests/" + urlTest + "/sub/" + urlSub + "/put",
-                type: "PUT",
-                data: objsub,
-                xhrFields: {
-                    withCredentials: true
-                }
-            })
-                .done(function (data, textStatus, jqXHR) {
-                    console.log("put ok")
-                })
-                .fail(function (jqXHR, textStatus, errorThrown) {
-                    alert(objsub + "Error" + errorThrown, jqXHR, textStatus);
-                    console.error(errorThrown);
-                })
-
-            window.location.href = "moxo_result_add.html?id=" + urlStd + "&ref=" + urlTest + "&ts=" + urlTS;
-
+            else {
+                alert("lütfen tüm değerleri giriniz")
+            }
         }
-        else {
-            alert("lütfen tüm değerleri giriniz")
-        }
-
 
     })
 

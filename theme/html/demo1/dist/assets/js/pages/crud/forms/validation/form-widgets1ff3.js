@@ -4,7 +4,7 @@ var KTFormWidgetsValidation = function () {
     // Private functions
     var validator;
 
-    var _initWidgets = function() {
+    var _initWidgets = function () {
         // Initialize Plugins
         // Datepicker
         $('#kt_datepicker').datepicker({
@@ -13,7 +13,7 @@ var KTFormWidgetsValidation = function () {
                 leftArrow: '<i class=\"la la-angle-left\"></i>',
                 rightArrow: '<i class=\"la la-angle-right\"></i>'
             }
-        }).on('changeDate', function(e) {
+        }).on('changeDate', function (e) {
             // Revalidate field
             validator.revalidateField('date');
         });
@@ -26,7 +26,7 @@ var KTFormWidgetsValidation = function () {
             format: 'yyyy.mm.dd hh:ii'
         });
 
-        $('#kt_datetimepicker').change(function() {
+        $('#kt_datetimepicker').change(function () {
             // Revalidate field
             validator.revalidateField('datetime');
         });
@@ -38,7 +38,7 @@ var KTFormWidgetsValidation = function () {
             showMeridian: true
         });
 
-        $('#kt_timepicker').change(function() {
+        $('#kt_timepicker').change(function () {
             // Revalidate field
             validator.revalidateField('time');
         });
@@ -48,9 +48,9 @@ var KTFormWidgetsValidation = function () {
             buttonClasses: ' btn',
             applyClass: 'btn-primary',
             cancelClass: 'btn-light-primary'
-        }, function(start, end, label) {
+        }, function (start, end, label) {
             var input = $('#kt_daterangepicker').find('.form-control');
-            input.val( start.format('YYYY/MM/DD') + ' / ' + end.format('YYYY/MM/DD'));
+            input.val(start.format('YYYY/MM/DD') + ' / ' + end.format('YYYY/MM/DD'));
 
             // Revalidate field
             validator.revalidateField('daterangepicker');
@@ -58,14 +58,14 @@ var KTFormWidgetsValidation = function () {
 
         // Bootstrap Switch
         $('[data-switch=true]').bootstrapSwitch();
-        $('[data-switch=true]').on('switchChange.bootstrapSwitch', function() {
+        $('[data-switch=true]').on('switchChange.bootstrapSwitch', function () {
             // Revalidate field
             validator.revalidateField('switch');
         });
 
         // Bootstrap Select
         $('#kt_bootstrap_select').selectpicker();
-        $('#kt_bootstrap_select').on('changed.bs.select', function() {
+        $('#kt_bootstrap_select').on('changed.bs.select', function () {
             // Revalidate field
             validator.revalidateField('select');
         });
@@ -75,7 +75,7 @@ var KTFormWidgetsValidation = function () {
             placeholder: "Select a state",
         });
 
-        $('#kt_select2').on('change', function(){
+        $('#kt_select2').on('change', function () {
             // Revalidate field
             validator.revalidateField('select2');
         });
@@ -92,7 +92,7 @@ var KTFormWidgetsValidation = function () {
             source: countries
         });
 
-        $('#kt_typeahead').bind('typeahead:select', function(ev, suggestion) {
+        $('#kt_typeahead').bind('typeahead:select', function (ev, suggestion) {
             // Revalidate field
             validator.revalidateField('typeahead');
         });
@@ -108,6 +108,57 @@ var KTFormWidgetsValidation = function () {
                         validators: {
                             notEmpty: {
                                 message: 'Date is required'
+                            }
+                        }
+                    },
+                    temel_1: {
+                        validators: {
+                            notEmpty: {
+                                message: 'temel_1 sonucu gerekli'
+                            }
+                        }
+                    },
+                    gorsel_1: {
+                        validators: {
+                            notEmpty: {
+                                message: 'gorsel_1 sonucu gerekli'
+                            }
+                        }
+                    },
+                    gorsel_2: {
+                        validators: {
+                            notEmpty: {
+                                message: 'gorsel_2 sonucu gerekli'
+                            }
+                        }
+                    }, isitsel_1: {
+                        validators: {
+                            notEmpty: {
+                                message: 'isitsel_1 sonucu gerekli'
+                            }
+                        }
+                    }, isitsel_2: {
+                        validators: {
+                            notEmpty: {
+                                message: 'isitsel_2 sonucu gerekli'
+                            }
+                        }
+                    }, birlesik_1: {
+                        validators: {
+                            notEmpty: {
+                                message: 'birlesik_1 sonucu gerekli'
+                            }
+                        }
+                    }, birlesik_2: {
+                        validators: {
+                            notEmpty: {
+                                message: 'birlesik_2 sonucu gerekli'
+                            }
+                        }
+                    }, temel_2: {
+                        validators: {
+                            notEmpty: {
+                                message: 'temel_2 sonucu gerekli'
                             }
                         }
                     },
@@ -171,10 +222,10 @@ var KTFormWidgetsValidation = function () {
 
                 plugins: {
                     trigger: new FormValidation.plugins.Trigger(),
-					// Validate fields when clicking the Submit button
-					submitButton: new FormValidation.plugins.SubmitButton(),
-            		// Submit the form when all fields are valid
-            		defaultSubmit: new FormValidation.plugins.DefaultSubmit(),
+                    // Validate fields when clicking the Submit button
+                    submitButton: new FormValidation.plugins.SubmitButton(),
+                    // Submit the form when all fields are valid
+                    defaultSubmit: new FormValidation.plugins.DefaultSubmit(),
                     // Bootstrap Framework Integration
                     bootstrap: new FormValidation.plugins.Bootstrap({
                         eleInvalidClass: '',
@@ -187,13 +238,13 @@ var KTFormWidgetsValidation = function () {
 
     return {
         // public functions
-        init: function() {
+        init: function () {
             _initWidgets();
             _initValidation();
         }
     };
 }();
 
-jQuery(document).ready(function() {
+jQuery(document).ready(function () {
     KTFormWidgetsValidation.init();
 });

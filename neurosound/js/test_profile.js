@@ -11,7 +11,7 @@ $(document).ready(function () {
         test_visibility.style.visibility = 'hidden';
     }
     test_visibility.style.visibility = 'hidden';
-
+    document.getElementById("testAddBtn").disabled = true;
     $.ajax({
         url: "http://localhost:8080/teststudent/list",
         type: "GET",
@@ -75,8 +75,8 @@ $(document).ready(function () {
 
                             },
                         },
-
-
+                        { "data": "status" },
+                        
                     ],
                     layout: {
                         scroll: false, // enable/disable datatable scroll both horizontal and vertical when needed.
@@ -103,7 +103,10 @@ $(document).ready(function () {
                     }
                     ts_variable = table.row('.selected').data().ref;
                     console.log(ts_variable)
+                    if (table.row('.selected')) {
+                        document.getElementById("testAddBtn").disabled = false;
 
+                    }
                 });
                 /*    $('#test_datatable tbody').on('click', 'tr', function () {
                            $(this).toggleClass('selected');
@@ -263,10 +266,7 @@ $(document).ready(function () {
                     student_id: urlStd,
                     end_date: testdate,
                     title: testNameValue + "-" + studentname,
-                    status_dikkat: "Girilmedi",
-                    status_zamanlama: "Girilmedi",
-                    status_hiperaktivite: "Girilmedi",
-                    status_durtusellik: "Girilmedi",
+                    status: result,
                 };
                 urlTs = getUrlParameter("ts");
                 if (urlTs == null) {
@@ -286,6 +286,8 @@ $(document).ready(function () {
                             console.error(errorThrown);
                         })
                 } else {
+                    alert("htmlkkkk")
+                    /*
                     $.ajax({
                         url: "http://localhost:8080/teststudent/tests/" + urlTest + "/student/" + urlStd + "/ts/" + urlTs + "/put",
 
@@ -302,7 +304,8 @@ $(document).ready(function () {
                         .fail(function (jqXHR, textStatus, errorThrown) {
                             alert(obj + "Error" + errorThrown, jqXHR, textStatus);
                             console.error(errorThrown);
-                        })
+                        })*/
+
                 }
             })
 

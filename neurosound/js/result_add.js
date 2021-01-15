@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    var deger, test, subtest, teststd, teststd_all;
+    var deger, test, subtest, teststd, teststd_all, subtestresult;
     var urlStd, urlTest, urlTS, urlSub, urlSR;
     var studentname, testNameValue;
     var items = [];
@@ -145,7 +145,7 @@ $(document).ready(function () {
                          document.getElementById("testResultAddBtn").disabled = true;
                      }
      */
-        //    console.log("teststd_item" + teststd_item)
+            //    console.log("teststd_item" + teststd_item)
             var table = $('#test_datatable').DataTable({
                 "data": teststd,
                 "language": {
@@ -179,32 +179,54 @@ $(document).ready(function () {
                     table.$('tr.selected').removeClass('selected');
                     $(this).addClass('selected');
                 }
-
                 ts_variable = table.row('.selected').data().ref;
                 if (table.row('.selected').data().status == "Girildi") {
-                    alert("Girilen değer tekrar düzenlenemez. Öğrenci profiline gidiniz.")
+                    //  alert("Girilen değer tekrar düzenlenemez. Öğrenci profiline gidiniz.")
+                    str_variable = table.row('.selected').data().subTestResults[0].ref;
+                    location.href = "result_add.html?id=" + urlStd + "&ref=" + urlTest + "&ts=" + urlTS + "&sub=" + ts_variable + "&sr=" + str_variable;
                 } else {
                     location.href = "result_add.html?id=" + urlStd + "&ref=" + urlTest + "&ts=" + urlTS + "&sub=" + ts_variable;
                 }
-
             });
 
 
         })
+    if (urlSR != null) {
+        $.ajax({///subtest/{sub_test}/ref/{ref}/list
+            url: "http://localhost:8080/subtestresult/subtest/" + urlSub + "/ref/" + urlSR + "/list",
+            method: "GET",
+        })
+            .done(function (data, textStatus, jqXHR) {
+                subtestresult = data;
+            })
+            .fail(function (jqXHR, textStatus, errorThrown) {
+                alert("Error");
+            })
+            .then(function () {
+                for (var i = 0; i < subtestresult.length; i++) {
+                    if (urlSR == subtestresult[i].ref) {
+                        document.getElementById("result").value = subtestresult[i].result
+                    }
 
+                }
+            })
+    }
 
     $('#testResultAddBtn').click(function () {
-
         var result = document.getElementById("result").value;
-        if (result != "") {
-            var obj = {
-                name: testNameValue,
-                result: result,
-                sub_test_ref: urlSub
-            };
-            $.ajax({
-                url: "http://localhost:8080/subtestresult/subtest/" + urlSub,
-                type: "POST",
+
+        var obj = {
+            name: testNameValue,
+            result: result,
+            sub_test_ref: urlSub
+        };
+
+
+        if (urlSR != null) {
+
+            $.ajax({///subtest/{sub_test}/ref/{ref}/put
+                url: "http://localhost:8080/subtestresult/subtest/" + urlSub + "/ref/" + urlSR + "/put",
+                type: "PUT",
                 data: obj,
                 xhrFields: {
                     withCredentials: true
@@ -217,60 +239,86 @@ $(document).ready(function () {
                     alert(obj + "Error" + errorThrown, jqXHR, textStatus);
                     console.error(errorThrown);
                 })
+                .then(function () {
+                    window.location.href = "result_add.html?id=" + urlStd + "&ref=" + urlTest + "&ts=" + urlTS;
 
-            var status = "Girildi";
+                })
+        } else {
+            if (result != "") {
 
-            var objsub = {
-                name: testNameValue,
-                test_student_ref: urlTS,
-                tests_ref: urlTest,
-                status: status,
-            };
-            $.ajax({///teststudent/{test_student_ref}/tests/{tests_ref}/sub/{ref}/put
-                url: "http://localhost:8080/subtest/teststudent/" + urlTS + "/tests/" + urlTest + "/sub/" + urlSub + "/put",
-                type: "PUT",
-                data: objsub,
-                xhrFields: {
-                    withCredentials: true
-                }
-            })
-                .done(function (data, textStatus, jqXHR) {
-                    console.log("put ok")
+                $.ajax({
+                    url: "http://localhost:8080/subtestresult/subtest/" + urlSub,
+                    type: "POST",
+                    data: obj,
+                    xhrFields: {
+                        withCredentials: true
+                    }
                 })
-                .fail(function (jqXHR, textStatus, errorThrown) {
-                    alert(objsub + "Error" + errorThrown, jqXHR, textStatus);
-                    console.error(errorThrown);
-                })
-            var objteststd = {
-                test_date: test_date,
-                test_id: urlTest,
-                student_id: urlStd,
-                end_date: test_date,
-                title: test_name + "-" + studentname,
-                status: status,
-            };
-            $.ajax({
-                url: "http://localhost:8080/teststudent/tests/" + urlTest + "/student/" + urlStd + "/ts/" + urlTS + "/put",
+                    .done(function (data, textStatus, jqXHR) {
+                        console.log("ok")
+                    })
+                    .fail(function (jqXHR, textStatus, errorThrown) {
+                        alert(obj + "Error" + errorThrown, jqXHR, textStatus);
+                        console.error(errorThrown);
+                    })
 
-                type: "PUT",
-                data: objteststd,
-                xhrFields: {
-                    withCredentials: true
-                }
-            })
-                .done(function (data, textStatus, jqXHR) {
-                    console.log("put ok")
-                })
-                .fail(function (jqXHR, textStatus, errorThrown) {
-                    alert(objteststd + "Error" + errorThrown, jqXHR, textStatus);
-                    console.error(errorThrown);
-                })
-            window.location.href = "result_add.html?id=" + urlStd + "&ref=" + urlTest + "&ts=" + urlTS;
+                var status = "Girildi";
 
+                var objsub = {
+                    name: testNameValue,
+                    test_student_ref: urlTS,
+                    tests_ref: urlTest,
+                    status: status,
+                };
+                $.ajax({///teststudent/{test_student_ref}/tests/{tests_ref}/sub/{ref}/put
+                    url: "http://localhost:8080/subtest/teststudent/" + urlTS + "/tests/" + urlTest + "/sub/" + urlSub + "/put",
+                    type: "PUT",
+                    data: objsub,
+                    xhrFields: {
+                        withCredentials: true
+                    }
+                })
+                    .done(function (data, textStatus, jqXHR) {
+                        console.log("put ok")
+                    })
+                    .fail(function (jqXHR, textStatus, errorThrown) {
+                        alert(objsub + "Error" + errorThrown, jqXHR, textStatus);
+                        console.error(errorThrown);
+                    })
+                var objteststd = {
+                    test_date: test_date,
+                    test_id: urlTest,
+                    student_id: urlStd,
+                    end_date: test_date,
+                  //  title: test_name + "-" + studentname,
+                    title: testNameValue + "-" + studentname,
+                    status: status,
+                };
+                $.ajax({
+                    url: "http://localhost:8080/teststudent/tests/" + urlTest + "/student/" + urlStd + "/ts/" + urlTS + "/put",
+
+                    type: "PUT",
+                    data: objteststd,
+                    xhrFields: {
+                        withCredentials: true
+                    }
+                })
+                    .done(function (data, textStatus, jqXHR) {
+                        console.log("put ok")
+                    })
+                    .fail(function (jqXHR, textStatus, errorThrown) {
+                        alert(objteststd + "Error" + errorThrown, jqXHR, textStatus);
+                        console.error(errorThrown);
+                    })
+                window.location.href = "result_add.html?id=" + urlStd + "&ref=" + urlTest + "&ts=" + urlTS;
+
+            }
+            else {
+                alert("lütfen tüm değerleri giriniz")
+            }
         }
-        else {
-            alert("lütfen tüm değerleri giriniz")
-        }
+
+
 
     })
 

@@ -65,6 +65,13 @@ var KTWizard1 = function () {
 							}
 						}
 					},
+					testvalue: {
+						validators: {
+							notEmpty: {
+								message: 'Test değeri gerekli.'
+							}
+						}
+					}
 				},
 				plugins: {
 					trigger: new FormValidation.plugins.Trigger(),
